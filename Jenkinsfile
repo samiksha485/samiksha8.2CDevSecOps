@@ -1,22 +1,13 @@
 pipeline {
   agent any
-
-  options {
-    skipDefaultCheckout(true)      // we do our own checkout
-    timestamps()                   // nice console timestamps
-  }
-
-  // Optional (keeps Part-1 “polling” requirement)
-  // triggers { pollSCM('H/5 * * * *') }
+  options { skipDefaultCheckout(true); timestamps() }
 
   stages {
-
     stage('Checkout') {
       steps {
         deleteDir()
-        // Public repo -> no credentials needed
         git branch: 'main',
-            url: 'https://github.com/samiksha485/8.2CDevSecOps.git'
+            url: 'https://github.com/samiksha485/samiksha8.2CDevSecOps.git'
       }
     }
 
@@ -35,7 +26,6 @@ pipeline {
 
     stage('Run Tests') {
       steps {
-        // keep the pipeline going even if tests fail
         sh 'npm test || true'
       }
     }
